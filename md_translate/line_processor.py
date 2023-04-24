@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 from langdetect import detect  # type: ignore
 from langdetect.lang_detect_exception import LangDetectException  # type: ignore
-import translators
+import translators # type: ignore
 
 if TYPE_CHECKING:
     from md_translate.settings import Settings
