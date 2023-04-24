@@ -20,21 +20,19 @@ def temp_test_file():
 
 
 class TestFileTranslator:
-    @mock.patch('md_translate.line_processor.get_translator_by_service_name')
-    def test_file_translator(self, get_translator_mock, temp_test_file):
+    @mock.patch('translators.translate_text')
+    def test_file_translator(self, translator_mock, temp_test_file):
         class SettingsMock:
-            service_name = 'Yandex'
+            service_name = 'yandex'
             source_lang = 'en'
             target_lang = 'ru'
             api_key = 'TEST_API_KEY'
 
-        translator_mock = Mock()
         translator_mock.return_value = 'Переведенная строка'
-        get_translator_mock.return_value = translator_mock
         with FileTranslator(SettingsMock(), file_to_test_on) as file_translator:
             assert isinstance(file_translator, FileTranslator)
             file_translator.translate()
-        get_translator_mock.assert_called_with(SettingsMock.service_name)
-        translator_mock.assert_called_with('Some string for translation\n', from_language='en', to_language='ru')
+        translator_mock.assert_called_with(
+            'Some string for translation\n', translator='yandex', from_language='en', to_language='ru')
 
         assert file_to_test_on.read_text() == fixture_translated.read_text()

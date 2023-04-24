@@ -2,8 +2,7 @@ from typing import TYPE_CHECKING
 
 from langdetect import detect  # type: ignore
 from langdetect.lang_detect_exception import LangDetectException  # type: ignore
-
-from md_translate.utils import get_translator_by_service_name
+import translators
 
 if TYPE_CHECKING:
     from md_translate.settings import Settings
@@ -18,7 +17,6 @@ class Line:
 
     def __init__(self, settings: 'Settings', line: str) -> None:
         self.settings = settings
-        self._translator = get_translator_by_service_name(self.settings.service_name)
         self._line: str = line
         self._translated_line = ''
 
@@ -60,8 +58,9 @@ class Line:
         )
 
     def _translate(self) -> None:
-        self._translated_line = self._translator(
+        self._translated_line = translators.translate_text(
             self._line,
+            translator=self.settings.service_name,
             from_language=self.settings.source_lang,
             to_language=self.settings.target_lang,
         )

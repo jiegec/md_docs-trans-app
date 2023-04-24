@@ -28,15 +28,15 @@ classifiers = [
 md-translate = 'md_translate.app:run'
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 requests = "^2.24.0"
-translators = "^4.7.2"
+translators = "^5.7.0"
 langdetect = "^1.0.8"
 loguru = "^0.5.3"
 
 [tool.poetry.dev-dependencies]
 coverage = "^5.2"
-mypy = "^0.782"
+mypy = "^1.2.0"
 black = "^19.10b0"
 isort = "^5.6.4"
 pytest = "^6.1.1"
